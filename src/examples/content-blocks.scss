@@ -1,0 +1,58 @@
+@use '../hextile';
+
+:root {
+  font-family: Raleway, sans-serif;
+  font-size: clamp(8px, 1.5vw, 20px);
+}
+
+body {
+  background-image: url(https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MTgxMzQ4Mg&ixlib=rb-1.2.1&w=1920&q=85);
+  background-size: contain;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+//non-default values for hex cell properties need to be declared before appplying grid
+@include hextile.hex-attr($cell-padding: 10px);
+
+.hex-grid {
+  @include hextile.grid($columns: 4, $max-rows: 9, $grid-spacing: 0.5ch, $stagger-direction: 'up');
+  margin: 1em auto;
+  padding: 0;
+  border: 0 none;
+  filter: drop-shadow(1px 4px 2px rgba(0, 0, 0, 0.5));
+
+  > * {
+    @include hextile.hex {
+      background-color: #0f0f0f;
+      background: radial-gradient(ellipse 50% 80% at 50% -25%, rgba(51, 51, 51, 1) 10%, rgba(15, 15, 15, 1) 90%);
+      color: rgba(200, 200, 200, 0.6);
+      text-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+
+  }
+}
+
+.content {
+  font-size: .75em;
+
+  p {
+    overflow-wrap: break-word;
+    text-align: left;
+  }
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 100;
+    color: #072;
+    text-shadow: 1px 1px 1px #444;
+  }
+
+  sup {
+    display: inline-block;
+    font-size: 0.5em;
+    text-decoration: underline;
+    vertical-align: top;
+  }
+}

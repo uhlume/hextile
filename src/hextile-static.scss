@@ -1,0 +1,46 @@
+@use 'hextile';
+
+@include hextile.hex-attr($cell-padding: 1em);
+
+.hextile-1-column {
+    @include hextile.grid($columns: 1, $max-rows: 100);
+    > * {
+        @include hextile.hex;
+    }
+}
+
+.hextile-2-column {
+    @include hextile.grid($columns: 2, $max-rows: 50);
+    > * {
+        @include hextile.hex;
+    }
+}
+
+.hextile-3-column {
+    @include hextile.grid($columns: 3, $max-rows: 33);
+    > * {
+        @include hextile.hex;
+    }
+}
+
+.hextile-4-column {
+    @include hextile.grid($columns: 4, $max-rows: 25);
+    > * {
+        @include hextile.hex;
+    }
+}
+
+.hextile-5-column {
+    @include hextile.grid($columns: 5, $max-rows: 20);
+    > * {
+        @include hextile.hex;
+    }
+}
+
+.hextile-6-column {
+    @include hextile.grid($columns: 6, $max-rows: 16);
+    > * {
+        @include hextile.hex;
+    }
+}
+

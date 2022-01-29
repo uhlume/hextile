@@ -1,0 +1,58 @@
+@use 'sass:math';
+@use 'sass:string';
+@use '../hextile';
+
+:root {
+    font-family: Raleway, sans-serif;
+    font-size: clamp(8px, 1.5vw, 20px);  
+    // background: url(https://images.unsplash.com/photo-1577132161035-1a187871ec13?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80&w=1920);
+    // background-size: cover;
+    background-color: #eee;
+    color: #333;
+}
+
+body {
+    margin:0;
+    padding: 1em;
+}
+
+.gallery {
+    @include hextile.grid($columns: 4, $max-rows: 5, $stagger-direction: up);
+    padding: 1em;
+
+    > * {
+        @include hextile.hex {
+            background: #333;
+        }
+    }
+
+    h3 {
+        text-shadow: 1px 1px 2px hsla(0,0,0,0.75);
+    }
+}
+
+h1,
+h3 {
+    text-align: center;
+    width: 50%;
+    margin: auto auto 1em;
+}
+
+
+@function zero-fill($number, $digits) {
+    $num-string: '#{$number}';
+    @for $i from 0 to math.max($digits - string.length($num-string), 0) {
+        $num-string: '0#{$num-string}';
+    }
+    @return $num-string;
+}
+
+@for $i from 1 through 20 {
+    #thumb-#{zero-fill($i, 3)} {
+        background-image: url(http://unsplash.it/1280?random&gravity=center&nonce=#{$i});
+        @include hextile.border(0.4px);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+    }
+}

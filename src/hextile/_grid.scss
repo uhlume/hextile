@@ -1,0 +1,67 @@
+@use '_hex' as *;
+@use '_globals' as *;
+
+@mixin grid($columns: 1, $max-rows: 1, $stagger-direction: 'down', $grid-spacing: 0.5em) {
+  @if ($stagger-direction != 'up' and $stagger-direction != 'down') {
+    @error "$stagger-direction must be either 'up' or 'down'.";
+  }
+
+  display: grid;
+  box-sizing: padding-box;
+  position: relative;
+
+  //generate grid
+  $v-gap: $grid-spacing;
+  $h-gap: ($grid-spacing * (1 + $cell-height-ratio));
+  @if $cell-width {
+    $h-gap-offset: $h-gap / 2;
+    grid-template-columns: repeat($columns, #{(0.25 * $cell-width - $h-gap)} #{0.5 * $cell-width}) #{0.25 * $cell-width};
+  } @else {
+    grid-template-columns: repeat($columns, 1fr 2fr) 1fr;
+  }
+  gap: $v-gap $h-gap;
+
+  > * {
+    @include hex;
+
+    // tile layout
+    // row assignments
+    @for $current-row from 0 to $max-rows {
+      &:nth-child(-n + #{($current-row + 1) * $columns}):nth-child(n + #{(($current-row * $columns) + 1)}) {
+        $computed-grid-row: 2 * $current-row + 1;
+        --grid-row-base: #{$computed-grid-row};
+        grid-row-start: $computed-grid-row;
+      }
+    }
+
+    // column assignments
+    @for $current-column from 0 to $columns {
+      &:nth-child(#{$columns}n + #{$current-column + 1}) {
+        grid-column-start: #{$current-column * 2 + 1};
+      }
+    }
+
+    // vertically offset alternating columns
+    $first-offset-column: 2;
+    @if $stagger-direction == 'up' {
+      $first-offset-column: 1;
+    }
+    @for $current-column from $first-offset-column through $columns {
+      @if ($current-column + $first-offset-column) % 2 == 0 {
+        &:nth-child(#{$columns}n + #{$current-column}) {
+          grid-row-start: calc(var(--grid-row-base) + 1) !important;
+        }
+      }
+    }
+
+    // hide any elements in excess of grid size
+    &:nth-child(n + #{$columns * $max-rows + 1}) {
+      display: none;
+    }
+  }
+
+  // selectively supress grid cells
+  .blank {
+    display: none;
+  }
+}

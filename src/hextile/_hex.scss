@@ -1,0 +1,125 @@
+@use '_globals' as *;
+
+//constants and private variables
+$cell-height-ratio: 0.86602540378; // the ratio of hex cell height to width (for regular hexagons, this will always be 0.86602540378/1)
+
+//globals
+$cell-width: null;
+$cell-padding: 25px;
+
+@mixin hex-attr($cell-width: null, $cell-padding: null) {
+  @if (not $-hex-attr) { // check to see if attributes have already been set
+    @if $cell-width {
+      $cell-width: $cell-width !global;
+    }
+    @if $cell-padding {
+      $cell-padding: $cell-padding !global;
+    }
+    $-hex-attr: true !global;
+  } @else {
+    @error '`hex-attr()` should only be invoked once per stylesheet. Ignoring new config.'
+  }
+
+}
+
+@mixin _shape-outside-pseudoelement($alignment: left) {
+  content: '';
+  display: box;
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0 none;
+  shape-margin: $cell-height-ratio * $cell-padding;
+  z-index: 130;
+  float: $alignment;
+  @content;
+}
+
+@mixin hex($args...) {
+  display: block;
+  box-sizing: border-box;
+  position: relative;
+  list-style: none;
+  grid-column-end: span 3;
+  grid-row-end: span 2;
+  clip-path: polygon(75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%, 25% 0, 75% 0);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: #{if($cell-width, $cell-width, '100%')};
+  aspect-ratio: 1 /#{$cell-height-ratio};
+  overflow: hidden; //fallback for browsers without suppport for `overflow: clip`
+  overflow: clip;
+  z-index: 100;
+
+  @content;
+
+  .content {
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    clip-path: inset(0 0 $cell-padding);
+    z-index: 120;
+
+    %normalize-block-elements {
+      margin: 0;
+      padding: $cell-padding 0 0;
+      z-index: 130;
+      position: relative;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @extend %normalize-block-elements;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    img {
+      position: absolute;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0;
+      top: 0;
+      left: 0;
+      z-index: 110;
+    }
+
+    &::before {
+      @include _shape-outside-pseudoelement(right) {
+        shape-outside: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 100% 50%);
+      }
+    }
+  }
+
+  &::before {
+    @include _shape-outside-pseudoelement(left) {
+      shape-outside: polygon(0% 0%, 50% 0%, 0% 50%, 50% 100%, 0% 100%);
+    }
+  }
+}
+@mixin border($thickness, $color: #000) {
+  filter: 
+    drop-shadow(#{$thickness} 0 0 $color)
+    drop-shadow(-#{$thickness} 0 0 $color)
+    drop-shadow(0 #{$thickness} 0 $color)
+    drop-shadow(0 -#{$thickness} 0 $color)
+    drop-shadow(#{$thickness} #{$thickness} 0 $color)
+    drop-shadow(-#{$thickness} -#{$thickness} 0 $color)
+    drop-shadow(-#{$thickness} #{$thickness} 0 $color)
+    drop-shadow(#{$thickness} -#{$thickness} 0 $color);
+}
