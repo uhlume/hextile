@@ -1,46 +1,19 @@
-@use 'hextile';
+@use 'sass:math';
+@use '../hextile';
+
+// configuration variables
+// =======================
+$max-elements: 120; // maximum number of elements the hex grid needs to accomodate
+$column-layouts: 10;  // pre-generate n-column layouts for each n from 1 through this number
 
 @include hextile.hex-attr($cell-padding: 1em);
 
-.hextile-1-column {
-    @include hextile.grid($columns: 1, $max-rows: 100);
-    > * {
-        @include hextile.hex;
+@for $i from 1 through $column-layouts {
+    .hextile-#{$i}-column {
+        // generate sufficient rows at column-count to contain all expected elements
+        @include hextile.grid($columns: $i, $max-rows: math.ceil(math.div($max-elements, $i)));
+        > * {
+            @include hextile.hex;
+        }
     }
 }
-
-.hextile-2-column {
-    @include hextile.grid($columns: 2, $max-rows: 50);
-    > * {
-        @include hextile.hex;
-    }
-}
-
-.hextile-3-column {
-    @include hextile.grid($columns: 3, $max-rows: 33);
-    > * {
-        @include hextile.hex;
-    }
-}
-
-.hextile-4-column {
-    @include hextile.grid($columns: 4, $max-rows: 25);
-    > * {
-        @include hextile.hex;
-    }
-}
-
-.hextile-5-column {
-    @include hextile.grid($columns: 5, $max-rows: 20);
-    > * {
-        @include hextile.hex;
-    }
-}
-
-.hextile-6-column {
-    @include hextile.grid($columns: 6, $max-rows: 16);
-    > * {
-        @include hextile.hex;
-    }
-}
-
