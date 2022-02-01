@@ -39,7 +39,8 @@ body {
 
   p {
     overflow-wrap: break-word;
-    text-align: left;
+    hyphens: auto;
+    text-align: justify;
   }
   h1 {
     text-align: center;
