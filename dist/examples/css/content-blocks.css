@@ -14,9 +14,6 @@ body {
 .hex-grid {
   display: -ms-grid;
   display: grid;
-  -webkit-box-sizing: padding-box;
-          box-sizing: padding-box;
-  position: relative;
   -ms-grid-columns: 1fr 0.9330127019ch 2fr 0.9330127019ch 1fr 0.9330127019ch 2fr 0.9330127019ch 1fr 0.9330127019ch 2fr 0.9330127019ch 1fr 0.9330127019ch 2fr 0.9330127019ch 1fr;
   grid-template-columns: repeat(4, 1fr 2fr) 1fr;
   gap: 0.5ch 0.9330127019ch;
@@ -28,9 +25,6 @@ body {
 }
 .hex-grid > * {
   display: block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  position: relative;
   list-style: none;
   -ms-grid-column-span: 3;
   grid-column-end: span 3;
@@ -45,13 +39,9 @@ body {
   aspect-ratio: 1/0.8660254038;
   overflow: hidden;
   overflow: clip;
-  z-index: 100;
 }
 .hex-grid > * .content {
   display: block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  position: relative;
   height: 100%;
   width: 100%;
   padding: 0;
@@ -59,7 +49,6 @@ body {
   border: 0;
   -webkit-clip-path: inset(0 0 10px);
           clip-path: inset(0 0 10px);
-  z-index: 120;
 }
 .hex-grid > * .content p,
 .hex-grid > * .content h1,
@@ -70,8 +59,6 @@ body {
 .hex-grid > * .content h6 {
   margin: 0;
   padding: 10px 0 0;
-  z-index: 130;
-  position: relative;
 }
 .hex-grid > * .content h1 {
   text-align: center;
@@ -83,35 +70,26 @@ body {
   padding: 0;
   top: 0;
   left: 0;
-  z-index: 110;
 }
 .hex-grid > * .content::before {
   content: "";
-  display: box;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: 50%;
   height: 100%;
   padding: 0;
   margin: 0;
   border: 0 none;
   shape-margin: 8.6602540378px;
-  z-index: 130;
   float: right;
   shape-outside: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 100% 50%);
 }
 .hex-grid > *::before {
   content: "";
-  display: box;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: 50%;
   height: 100%;
   padding: 0;
   margin: 0;
   border: 0 none;
   shape-margin: 8.6602540378px;
-  z-index: 130;
   float: left;
   shape-outside: polygon(0% 0%, 50% 0%, 0% 50%, 50% 100%, 0% 100%);
 }
@@ -192,9 +170,6 @@ body {
 }
 .hex-grid > * {
   display: block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  position: relative;
   list-style: none;
   -ms-grid-column-span: 3;
   grid-column-end: span 3;
@@ -209,7 +184,6 @@ body {
   aspect-ratio: 1/0.8660254038;
   overflow: hidden;
   overflow: clip;
-  z-index: 100;
   background-color: #0f0f0f;
   background: radial-gradient(ellipse 50% 80% at 50% -25%, #333333 10%, #0f0f0f 90%);
   color: rgba(200, 200, 200, 0.6);
@@ -217,9 +191,6 @@ body {
 }
 .hex-grid > * .content {
   display: block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  position: relative;
   height: 100%;
   width: 100%;
   padding: 0;
@@ -227,7 +198,6 @@ body {
   border: 0;
   -webkit-clip-path: inset(0 0 10px);
           clip-path: inset(0 0 10px);
-  z-index: 120;
 }
 .hex-grid > * .content p,
 .hex-grid > * .content h1,
@@ -238,8 +208,6 @@ body {
 .hex-grid > * .content h6 {
   margin: 0;
   padding: 10px 0 0;
-  z-index: 130;
-  position: relative;
 }
 .hex-grid > * .content h1 {
   text-align: center;
@@ -251,35 +219,26 @@ body {
   padding: 0;
   top: 0;
   left: 0;
-  z-index: 110;
 }
 .hex-grid > * .content::before {
   content: "";
-  display: box;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: 50%;
   height: 100%;
   padding: 0;
   margin: 0;
   border: 0 none;
   shape-margin: 8.6602540378px;
-  z-index: 130;
   float: right;
   shape-outside: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 100% 50%);
 }
 .hex-grid > *::before {
   content: "";
-  display: box;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   width: 50%;
   height: 100%;
   padding: 0;
   margin: 0;
   border: 0 none;
   shape-margin: 8.6602540378px;
-  z-index: 130;
   float: left;
   shape-outside: polygon(0% 0%, 50% 0%, 0% 50%, 50% 100%, 0% 100%);
 }
@@ -289,7 +248,10 @@ body {
 }
 .content p {
   overflow-wrap: break-word;
-  text-align: left;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+  text-align: justify;
 }
 .content h1 {
   text-align: center;

@@ -7,10 +7,8 @@
   }
 
   display: grid;
-  box-sizing: padding-box;
-  position: relative;
 
-  //generate grid
+  //generate grid template
   $v-gap: $grid-spacing;
   $h-gap: ($grid-spacing * (1 + $cell-height-ratio));
   @if $cell-width {
