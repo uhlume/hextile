@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 @use '_globals' as *;
 
 @mixin hex-attr($cell-width: null, $cell-padding: null) {
