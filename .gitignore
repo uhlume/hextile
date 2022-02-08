@@ -64,3 +64,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Demo site compiled files
+demo/css/

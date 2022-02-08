@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@use '_globals' as *;
+@use 'base' as *;
 
 @mixin hex-attr($cell-width: null, $cell-padding: null) {
   // check to see if attributes have already been set
@@ -24,7 +24,7 @@
   padding: 0;
   margin: 0;
   border: 0 none;
-  shape-margin: $cell-height-ratio * $cell-padding;
+  shape-margin: $CELL-HEIGHT-RATIO * $cell-padding;
   float: $alignment;
   @content;
 }
@@ -39,7 +39,7 @@
   margin: 0;
   border: 0;
   width: #{if($cell-width, $cell-width, '100%')};
-  aspect-ratio: 1 /#{$cell-height-ratio};
+  aspect-ratio: 1 /#{$CELL-HEIGHT-RATIO};
   overflow: hidden; //fallback for browsers without suppport for `overflow: clip`
   overflow: clip;
   @content;

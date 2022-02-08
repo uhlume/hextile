@@ -1,7 +1,7 @@
 @charset "utf-8";
 
-@use '_hex' as *;
-@use '_globals' as *;
+@use 'hex' as *;
+@use 'base' as *;
 
 @mixin grid($columns: 1, $max-rows: 1, $stagger-direction: 'down', $grid-spacing: 0.5em) {
   @if ($stagger-direction != 'up' and $stagger-direction != 'down') {
@@ -12,7 +12,7 @@
 
   //generate grid template
   $v-gap: $grid-spacing;
-  $h-gap: ($grid-spacing * (1 + $cell-height-ratio));
+  $h-gap: ($grid-spacing * (1 + $CELL-HEIGHT-RATIO));
   @if $cell-width {
     $h-gap-offset: $h-gap / 2;
     grid-template-columns: repeat($columns, #{(0.25 * $cell-width - $h-gap)} #{0.5 * $cell-width}) #{0.25 * $cell-width};
