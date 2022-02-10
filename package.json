@@ -3,23 +3,49 @@
     "version": "0.1.0",
     "description": "Hextile is a lightweight SASS module which enables extensible fluid and/or responsive hex grid layouts in pure CSS with an absolute minimum of boilerplate HTML.",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "prepare": "husky install",
+        "release" : "standard-version"
     },
     "repository": "git+https://github.com/uhlume/hextile.git",
     "keywords": [
-      "hexagon",
-      "hex",
-      "grid",
-      "CSS",
-      "SASS",
-      "SCSS"
+        "hexagon",
+        "hex",
+        "grid",
+        "CSS",
+        "SASS",
+        "SCSS"
     ],
     "author": "J Gingold <uhlume@gmail.com> (https://jgingold.com)",
     "license": "Apache-2.0",
     "bugs": {
-      "url": "https://github.com/uhlume/hextile/issues"
+        "url": "https://github.com/uhlume/hextile/issues"
     },
     "homepage": "https://github.com/uhlume/hextile#readme",
-    "private": true
-  }
-  
+    "private": true,
+    "devDependencies": {
+        "@commitlint/cli": "^16.1.0",
+        "@commitlint/config-conventional": "^16.0.0",
+        "husky": "^7.0.4",
+        "standard-version": "^9.3.2"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "standard-version": {
+        "types": [
+            {"type": "build", "hidden": true},
+            {"type": "chore", "hidden": true},
+            {"type": "ci", "hidden": true},
+            {"type": "docs", "section": "Documentation"},
+            {"type": "feat", "section": "Features"},
+            {"type": "fix", "section": "Bug Fixes"},
+            {"type": "perf", "section": "Performance Improvements"},
+            {"type": "revert", "hidden": true},
+            {"type": "refactor", "hidden": true},
+            {"type": "style", "hidden": true},
+            {"type": "test", "hidden": true}
+        ]
+    }
+}
