@@ -3,23 +3,30 @@
     "version": "0.1.0",
     "description": "Hextile is a lightweight SASS module which enables extensible fluid and/or responsive hex grid layouts in pure CSS with an absolute minimum of boilerplate HTML.",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "prepare": "husky install"
     },
     "repository": "git+https://github.com/uhlume/hextile.git",
     "keywords": [
-      "hexagon",
-      "hex",
-      "grid",
-      "CSS",
-      "SASS",
-      "SCSS"
+        "hexagon",
+        "hex",
+        "grid",
+        "CSS",
+        "SASS",
+        "SCSS"
     ],
     "author": "J Gingold <uhlume@gmail.com> (https://jgingold.com)",
     "license": "Apache-2.0",
     "bugs": {
-      "url": "https://github.com/uhlume/hextile/issues"
+        "url": "https://github.com/uhlume/hextile/issues"
     },
     "homepage": "https://github.com/uhlume/hextile#readme",
-    "private": true
+    "private": true,
+    "devDependencies": {
+        "@commitlint/cli": "^16.1.0",
+        "@commitlint/config-conventional": "^16.0.0",
+        "husky": "^7.0.4"
+    },
+    "commitlint": {
+      "extends": ["@commitlint/config-conventional"]
   }
-  
+}
