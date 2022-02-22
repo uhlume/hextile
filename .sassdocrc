@@ -1,0 +1,10 @@
+dest: docs/
+groups:
+  global: Global
+  hex: Hex
+  grid: Hex Grid
+autofill:
+  - content
+exclude:
+  - hextile-static.css
+no-update-notifier: true

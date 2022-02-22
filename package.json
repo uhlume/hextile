@@ -4,7 +4,8 @@
     "description": "Hextile is a lightweight SASS module which enables extensible fluid and/or responsive hex grid layouts in pure CSS with an absolute minimum of boilerplate HTML.",
     "scripts": {
         "prepare": "husky install",
-        "release" : "standard-version"
+        "release" : "standard-version",
+        "make-docs": "sassdoc sass"
     },
     "repository": "git+https://github.com/uhlume/hextile.git",
     "keywords": [
