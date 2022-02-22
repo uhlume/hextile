@@ -1,11 +1,35 @@
 @charset "utf-8";
+////
+/// @group grid
+////
 
 @use 'hex' as *;
 @use 'base' as *;
+@use 'sass:string';
 
+
+/// Configure hex grid layout on a container element. 
+///
+/// Due to current limitations of CSS Grid's implicit grid, Hextile needs to
+/// explicitly define the underlying rectangular grid from which its hex grid is
+/// derived, rather than rely on runtime auto-placement. Any member elements in
+/// excess of the product of `$columns` * `$max-rows` will be suppressed (set to
+/// `display: none`). It is therefore inadvisable to employ a Hextile grid when
+/// laying out items whose total count can't be easily predicted.
+///
+/// @param {number} $columns [1] Number of grid columns to pre-allocate.
+/// @param {number} $max-rows [1] Maximum number of rows to pre-allocate.
+/// @param {down|up} $stagger-direction ['down'] Direction to offset alternating
+/// columns, relative to the first.
+/// @param {length|percentage} $grid-spacing [0.5em] Gap to leave between hex
+/// cells.
+///
+/// @require {mixin} hex
+///
 @mixin grid($columns: 1, $max-rows: 1, $stagger-direction: 'down', $grid-spacing: 0.5em) {
+  $stagger-direction: string.to-lower-case($stagger-direction);
   @if ($stagger-direction != 'up' and $stagger-direction != 'down') {
-    @error "$stagger-direction must be either 'up' or 'down'.";
+    @error "$stagger-direction must be either up or down.";
   }
 
   display: grid;

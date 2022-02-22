@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Hextile - v0.1.0</title><link rel="stylesheet" href="assets/css/main.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,700" rel="stylesheet" type="text/css"><meta name="viewport" content="width=device-width"><meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible"><!-- Open Graph tags --><meta property="og:title" content="Hextile - SassDoc"><meta property="og:type" content="website"><meta property="og:description" content="<p>Hextile is a lightweight SASS module which enables extensible fluid and/or responsive hex grid layouts in pure CSS with an absolute minimum of boilerplate HTML.</p>
+"><!-- Thanks to Sass-lang.com for the icons --><link href="assets/images/favicon.png" rel="shortcut icon"></head><body><aside class="sidebar" role="nav"><div class="sidebar__header"><h1 class="sidebar__title"><a href="https://github.com/uhlume/hextile#readme">Hextile - v0.1.0</a></h1></div><div class="sidebar__body"><button type="button" class="btn-toggle js-btn-toggle" data-alt="Open all">Close all</button><p class="sidebar__item sidebar__item--heading" data-slug="global"><a href="#global">Global</a></p><div><p class="sidebar__item sidebar__item--sub-heading" data-slug="global-variable"><a href="#global-variable">variables</a></p><ul class="list-unstyled"><li class="sidebar__item sassdoc__item" data-group="global" data-name="cell-width" data-type="variable"><a href="#global-variable-cell-width">cell-width</a></li><li class="sidebar__item sassdoc__item" data-group="global" data-name="cell-padding" data-type="variable"><a href="#global-variable-cell-padding">cell-padding</a></li></ul></div><p class="sidebar__item sidebar__item--heading" data-slug="grid"><a href="#grid">Hex Grid</a></p><div><p class="sidebar__item sidebar__item--sub-heading" data-slug="grid-mixin"><a href="#grid-mixin">mixins</a></p><ul class="list-unstyled"><li class="sidebar__item sassdoc__item" data-group="grid" data-name="grid" data-type="mixin"><a href="#grid-mixin-grid">grid</a></li></ul></div><p class="sidebar__item sidebar__item--heading" data-slug="hex"><a href="#hex">Hex</a></p><div><p class="sidebar__item sidebar__item--sub-heading" data-slug="hex-mixin"><a href="#hex-mixin">mixins</a></p><ul class="list-unstyled"><li class="sidebar__item sassdoc__item" data-group="hex" data-name="hex-attr" data-type="mixin"><a href="#hex-mixin-hex-attr">hex-attr</a></li><li class="sidebar__item sassdoc__item" data-group="hex" data-name="hex" data-type="mixin"><a href="#hex-mixin-hex">hex</a></li><li class="sidebar__item sassdoc__item" data-group="hex" data-name="border" data-type="mixin"><a href="#hex-mixin-border">border</a></li></ul></div></div></aside><article class="main" role="main"><header class="header" role="banner"><div class="container"><div class="sassdoc__searchbar searchbar"><label for="js-search-input" class="visually-hidden">Search</label><div class="searchbar__form" id="js-search"><input name="search" type="search" class="searchbar__field" autocomplete="off" autofocus id="js-search-input" placeholder="Search"><ul class="searchbar__suggestions" id="js-search-suggestions"></ul></div></div></div></header><section class="main__section"><h1 class="main__heading" id="global"><div class="container">Global</div></h1><section class="main__sub-section" id="global-variable"><h2 class="main__heading--secondary"><div class="container">variables</div></h2><section class="main__item container item" id="global-variable-cell-width"><h3 class="item__heading"><a class="item__name" href="#variable-cell-width">cell-width</a></h3><div class="item__code-wrapper"><pre class="item__code language-scss"><code>$cell-width: null !default;</code></pre></div><h3 class="item__sub-heading">Description</h3><div class="item__description"><p>Fixed width for hex cells. If <code>null</code> (the default value), cells will automatically size themselves to fit available space in the container element. Accepts any CSS length or percentage value.</p></div></section><section class="main__item container item" id="global-variable-cell-padding"><h3 class="item__heading"><a class="item__name" href="#variable-cell-padding">cell-padding</a></h3><div class="item__code-wrapper"><pre class="item__code language-scss"><code>$cell-padding: 0 !default;</code></pre></div><h3 class="item__sub-heading">Description</h3><div class="item__description"><p>Hex interior padding. All cells within a Hextile grid share a single uniform padding value. Accepts any CSS length or percentage value.</p><p>(Note: This is a limitation of the technique Hextile uses to allow content to wrap properly inside a hexagonal cell, in the absence of browser support for the CSS <code>shape-inside</code> property.)</p></div></section></section></section><section class="main__section"><h1 class="main__heading" id="grid"><div class="container">Hex Grid</div></h1><section class="main__sub-section" id="grid-mixin"><h2 class="main__heading--secondary"><div class="container">mixins</div></h2><section class="main__item container item" id="grid-mixin-grid"><h3 class="item__heading"><a class="item__name" href="#mixin-grid">grid</a></h3><div class="item__code-wrapper"><pre class="item__code item__code--togglable language-scss" data-current-state="collapsed" data-expanded="@mixin grid($columns: 1, $max-rows: 1, $stagger-direction: &#39;down&#39;, $grid-spacing: 0.5em) { 
+  $stagger-direction: string.to-lower-case($stagger-direction);
+  @if ($stagger-direction != &#39;up&#39; and $stagger-direction != &#39;down&#39;) {
+    @error &quot;$stagger-direction must be either up or down.&quot;;
+  }
+
+  display: grid;
+
+  //generate grid template
+  $v-gap: $grid-spacing;
+  $h-gap: ($grid-spacing * (1 + $CELL-HEIGHT-RATIO));
+  @if $cell-width {
+    $h-gap-offset: $h-gap / 2;
+    grid-template-columns: repeat($columns, #{(0.25 * $cell-width - $h-gap)} #{0.5 * $cell-width}) #{0.25 * $cell-width};
+  } @else {
+    grid-template-columns: repeat($columns, 1fr 2fr) 1fr;
+  }
+  gap: $v-gap $h-gap;
+
+  &gt; * {
+    @include hex;
+
+    // tile layout
+    // row assignments
+    @for $current-row from 0 to $max-rows {
+      &amp;:nth-child(-n + #{($current-row + 1) * $columns}):nth-child(n + #{(($current-row * $columns) + 1)}) {
+        $computed-grid-row: 2 * $current-row + 1;
+        --grid-row-base: #{$computed-grid-row};
+        grid-row-start: $computed-grid-row;
+      }
+    }
+
+    // column assignments
+    @for $current-column from 0 to $columns {
+      &amp;:nth-child(#{$columns}n + #{$current-column + 1}) {
+        grid-column-start: #{$current-column * 2 + 1};
+      }
+    }
+
+    // vertically offset alternating columns
+    $first-offset-column: 2;
+    @if $stagger-direction == &#39;up&#39; {
+      $first-offset-column: 1;
+    }
+    @for $current-column from $first-offset-column through $columns {
+      @if ($current-column + $first-offset-column) % 2 == 0 {
+        &amp;:nth-child(#{$columns}n + #{$current-column}) {
+          grid-row-start: calc(var(--grid-row-base) + 1) !important;
+        }
+      }
+    }
+
+    // hide any elements in excess of grid size
+    &amp;:nth-child(n + #{$columns * $max-rows + 1}) {
+      display: none;
+    }
+  }
+
+  // selectively supress grid cells
+  .blank {
+    display: none;
+  }
+ }" data-collapsed="@mixin grid($columns: 1, $max-rows: 1, $stagger-direction: &#39;down&#39;, $grid-spacing: 0.5em) { ... }"><code>@mixin grid($columns: 1, $max-rows: 1, $stagger-direction: &#39;down&#39;, $grid-spacing: 0.5em) { ... }</code></pre></div><h3 class="item__sub-heading">Description</h3><div class="item__description"><p>Configure hex grid layout on a container element.</p><p>Due to current limitations of CSS Grid&#39;s implicit grid, Hextile needs to explicitly define the underlying rectangular grid from which its hex grid is derived, rather than rely on runtime auto-placement. Any member elements in excess of the product of <code>$columns</code> * <code>$max-rows</code> will be suppressed (set to <code>display: none</code>). It is therefore inadvisable to employ a Hextile grid when laying out items whose total count can&#39;t be easily predicted.</p></div><h3 class="item__sub-heading">Parameters</h3><table class="item__parameters"><thead><tr><th scope="col"><span class="visually-hidden">parameter </span>Name</th><th scope="col"><span class="visually-hidden">parameter </span>Description</th><th scope="col"><span class="visually-hidden">parameter </span>Type</th><th scope="col"><span class="visually-hidden">parameter </span>Default value</th></tr></thead><tbody><tr class="item__parameter"><th scope="row" data-label="name"><code>$columns</code></th><td data-label="desc"><p>Number of grid columns to pre-allocate.</p></td><td data-label="type"><code>Number</code></td><td data-label="default"><code>1</code></td></tr><tr class="item__parameter"><th scope="row" data-label="name"><code>$max-rows</code></th><td data-label="desc"><p>Maximum number of rows to pre-allocate.</p></td><td data-label="type"><code>Number</code></td><td data-label="default"><code>1</code></td></tr><tr class="item__parameter"><th scope="row" data-label="name"><code>$stagger-direction</code></th><td data-label="desc"><p>Direction to offset alternating columns, relative to the first.</p></td><td data-label="type"><code>Down</code> or <code>Up</code></td><td data-label="default"><code>&#39;down&#39;</code></td></tr><tr class="item__parameter"><th scope="row" data-label="name"><code>$grid-spacing</code></th><td data-label="desc"><p>Gap to leave between hex cells.</p></td><td data-label="type"><code>Length</code> or <code>Percentage</code></td><td data-label="default"><code>0.5em</code></td></tr></tbody></table><h3 class="item__sub-heading">Requires</h3><ul class="list-unstyled"><li class="item__description item__description--inline"><span class="item__cross-type">[mixin]</span> <a href="#hex-mixin-hex"><code>hex</code></a></li></ul></section></section></section><section class="main__section"><h1 class="main__heading" id="hex"><div class="container">Hex</div></h1><section class="main__sub-section" id="hex-mixin"><h2 class="main__heading--secondary"><div class="container">mixins</div></h2><section class="main__item container item" id="hex-mixin-hex-attr"><h3 class="item__heading"><a class="item__name" href="#mixin-hex-attr">hex-attr</a></h3><div class="item__code-wrapper"><pre class="item__code item__code--togglable language-scss" data-current-state="collapsed" data-expanded="@mixin hex-attr($cell-width: null, $cell-padding: null) { 
+  // check to see if attributes have already been set
+  @if (not $-hex-attr) {
+    @if $cell-width {
+      $cell-width: $cell-width !global;
+    }
+    @if $cell-padding {
+      $cell-padding: $cell-padding !global;
+    }
+    $-hex-attr: true !global;
+  } @else {
+    @error &#39;`hex-attr()` should only be invoked once per stylesheet. Ignoring new config.&#39;;
+  }
+ }" data-collapsed="@mixin hex-attr($cell-width: null, $cell-padding: null) { ... }"><code>@mixin hex-attr($cell-width: null, $cell-padding: null) { ... }</code></pre></div><h3 class="item__sub-heading">Parameters</h3><table class="item__parameters"><thead><tr><th scope="col"><span class="visually-hidden">parameter </span>Name</th><th scope="col"><span class="visually-hidden">parameter </span>Description</th><th scope="col"><span class="visually-hidden">parameter </span>Type</th><th scope="col"><span class="visually-hidden">parameter </span>Default value</th></tr></thead><tbody><tr class="item__parameter"><th scope="row" data-label="name"><code>$cell-width</code></th><td data-label="desc">&mdash;<span class="visually-hidden"> none</span></td><td data-label="type"><code>Any</code></td><td data-label="default"><code>null</code></td></tr><tr class="item__parameter"><th scope="row" data-label="name"><code>$cell-padding</code></th><td data-label="desc">&mdash;<span class="visually-hidden"> none</span></td><td data-label="type"><code>Any</code></td><td data-label="default"><code>null</code></td></tr></tbody></table></section><section class="main__item container item" id="hex-mixin-hex"><h3 class="item__heading"><a class="item__name" href="#mixin-hex">hex</a></h3><div class="item__code-wrapper"><pre class="item__code item__code--togglable language-scss" data-current-state="collapsed" data-expanded="@mixin hex($args...) { 
+  display: block;
+  list-style: none;
+  grid-column-end: span 3;
+  grid-row-end: span 2;
+  clip-path: polygon(75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%, 25% 0, 75% 0);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: #{if($cell-width, $cell-width, &#39;100%&#39;)};
+  aspect-ratio: 1 /#{$CELL-HEIGHT-RATIO};
+  overflow: hidden; //fallback for browsers without suppport for `overflow: clip`
+  overflow: clip;
+  @content;
+
+  .content {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    clip-path: inset(0 0 $cell-padding);
+
+    %normalize-block-elements {
+      margin: 0;
+      padding: $cell-padding 0 0;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @extend %normalize-block-elements;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    img {
+      position: absolute;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0;
+      top: 0;
+      left: 0;
+    }
+
+    &amp;::before {
+      @include _text-guide(right) {
+        shape-outside: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%, 100% 50%);
+      }
+    }
+  }
+
+  &amp;::before {
+    @include _text-guide(left) {
+      shape-outside: polygon(0% 0%, 50% 0%, 0% 50%, 50% 100%, 0% 100%);
+    }
+  }
+ }" data-collapsed="@mixin hex($args...) { ... }"><code>@mixin hex($args...) { ... }</code></pre></div><h3 class="item__sub-heading">Parameters</h3><table class="item__parameters"><thead><tr><th scope="col"><span class="visually-hidden">parameter </span>Name</th><th scope="col"><span class="visually-hidden">parameter </span>Description</th><th scope="col"><span class="visually-hidden">parameter </span>Type</th><th scope="col"><span class="visually-hidden">parameter </span>Default value</th></tr></thead><tbody><tr class="item__parameter"><th scope="row" data-label="name"><code>$args...</code></th><td data-label="desc">&mdash;<span class="visually-hidden"> none</span></td><td data-label="type"><code>Any</code></td><td data-label="default">&mdash;<span class="visually-hidden"> none</span></td></tr></tbody></table><h3 class="item__sub-heading">Used by</h3><ul class="list-unstyled"><li><span class="item__cross-type">[mixin]</span> <a href="#grid-mixin-grid"><code>grid</code></a></li></ul></section><section class="main__item container item" id="hex-mixin-border"><h3 class="item__heading"><a class="item__name" href="#mixin-border">border</a></h3><div class="item__code-wrapper"><pre class="item__code item__code--togglable language-scss" data-current-state="collapsed" data-expanded="@mixin border($thickness, $color: #000) { 
+  filter: drop-shadow(#{$thickness} 0 0 $color) drop-shadow(-#{$thickness} 0 0 $color)
+    drop-shadow(0 #{$thickness} 0 $color) drop-shadow(0 -#{$thickness} 0 $color)
+    drop-shadow(#{$thickness} #{$thickness} 0 $color) drop-shadow(-#{$thickness} -#{$thickness} 0 $color)
+    drop-shadow(-#{$thickness} #{$thickness} 0 $color) drop-shadow(#{$thickness} -#{$thickness} 0 $color);
+ }" data-collapsed="@mixin border($thickness, $color: #000) { ... }"><code>@mixin border($thickness, $color: #000) { ... }</code></pre></div><h3 class="item__sub-heading">Parameters</h3><table class="item__parameters"><thead><tr><th scope="col"><span class="visually-hidden">parameter </span>Name</th><th scope="col"><span class="visually-hidden">parameter </span>Description</th><th scope="col"><span class="visually-hidden">parameter </span>Type</th><th scope="col"><span class="visually-hidden">parameter </span>Default value</th></tr></thead><tbody><tr class="item__parameter"><th scope="row" data-label="name"><code>$thickness</code></th><td data-label="desc">&mdash;<span class="visually-hidden"> none</span></td><td data-label="type"><code>Any</code></td><td data-label="default">&mdash;<span class="visually-hidden"> none</span></td></tr><tr class="item__parameter"><th scope="row" data-label="name"><code>$color</code></th><td data-label="desc">&mdash;<span class="visually-hidden"> none</span></td><td data-label="type"><code>Any</code></td><td data-label="default"><code>#000</code></td></tr></tbody></table></section></section></section><footer class="footer" role="contentinfo"><div class="container"><div class="footer__project-info project-info"><!-- Name and URL --> <a class="project-info__name" href="https://github.com/uhlume/hextile#readme">Hextile</a><!-- Version --> <span class="project-info__version">- v0.1.0</span><!-- License --> <span class="project-info__license">, under Apache-2.0</span></div><a class="footer__watermark" href="http://sassdoc.com"><img src="assets/images/logo_light_inline.svg" alt="SassDoc Logo"></a></div></footer></article><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script><script src="assets/js/main.min.js"></script></body></html>

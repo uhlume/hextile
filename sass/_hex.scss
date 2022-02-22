@@ -1,6 +1,13 @@
 @charset "utf-8";
+////
+/// @group hex
+////
 
 @use 'base' as *;
+
+/// 
+/// @param {*} $cell-width [null] 
+/// @param {*} $cell-padding [null] 
 
 @mixin hex-attr($cell-width: null, $cell-padding: null) {
   // check to see if attributes have already been set
@@ -28,6 +35,9 @@
   float: $alignment;
   @content;
 }
+
+/// 
+/// @param {*} $args... 
 
 @mixin hex($args...) {
   display: block;
@@ -94,6 +104,10 @@
     }
   }
 }
+
+/// 
+/// @param {*} $thickness 
+/// @param {*} $color [#000] 
 
 @mixin border($thickness, $color: #000) {
   filter: drop-shadow(#{$thickness} 0 0 $color) drop-shadow(-#{$thickness} 0 0 $color)

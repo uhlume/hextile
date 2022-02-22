@@ -1,5 +1,19 @@
 @charset "utf-8";
+////
+/// @group global
+////
 
-//globals
+/// Fixed width for hex cells. If `null` (the default value), cells will
+/// automatically size themselves to fit available space in the container
+/// element. Accepts any CSS length or percentage value.
+
 $cell-width: null !default;
+
+/// Hex interior padding. All cells within a Hextile grid share a single uniform
+/// padding value. Accepts any CSS length or percentage value.
+///
+/// (Note: This is a limitation of the technique Hextile uses to allow content
+/// to wrap properly inside a hexagonal cell, in the absence of browser support
+/// for the CSS `shape-inside` property.)
+
 $cell-padding: 0 !default;
