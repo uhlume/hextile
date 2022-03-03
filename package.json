@@ -8,12 +8,13 @@
     },
     "repository": "git+https://github.com/uhlume/hextile.git",
     "keywords": [
+        "eyeglass-module",
         "hexagon",
         "hex",
         "grid",
-        "CSS",
-        "SASS",
-        "SCSS"
+        "css",
+        "sass",
+        "scss"
     ],
     "author": "J Gingold <uhlume@gmail.com> (https://jgingold.com)",
     "license": "Apache-2.0",
@@ -28,6 +29,12 @@
         "husky": "^7.0.4",
         "standard-version": "^9.3.2"
     },
+    "eyeglass": {
+        "name": "hextile",
+        "sassDir": "sass",
+        "needs": "*",
+        "exports": false
+      },
     "commitlint": {
         "extends": [
             "@commitlint/config-conventional"
