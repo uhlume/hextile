@@ -22,7 +22,9 @@
         "url": "https://github.com/uhlume/hextile/issues"
     },
     "homepage": "https://github.com/uhlume/hextile#readme",
-    "private": true,
+    "private": false,
+    "main": "_index.scss",
+    "style": "_index.scss",
     "devDependencies": {
         "@commitlint/cli": "^16.1.0",
         "@commitlint/config-conventional": "^16.0.0",
